@@ -97,7 +97,7 @@ const Main = () => {
           </Modal.Header>
           <Modal.Content className="modal-content">
             <Segment padded>
-              <Grid centered className="form-wrapper">
+              <Grid doubling stackable centered className="form-wrapper">
                 <Grid.Column>
                   <p>Client Name:</p>
                   <Input
@@ -119,7 +119,7 @@ const Main = () => {
                       setTitle(event.target.value);
                     }}
                   />
-                  <Grid columns="3">
+                  <Grid   stackable columns="4">
                     <Grid.Column>
                       <p>Start Date:</p>{" "}
                       <Input

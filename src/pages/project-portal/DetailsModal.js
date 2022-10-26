@@ -54,7 +54,7 @@ const ProjectDetailsModal = ({
           <Modal.Content className="modal-content">
             <Segment padded>
               <React.Fragment>
-                <Grid centered className="form-wrapper">
+                <Grid doubling stackable centered className="form-wrapper">
                   <Grid.Column>
                     {!editMode ? (
                       <React.Fragment>
@@ -74,7 +74,7 @@ const ProjectDetailsModal = ({
                           value={view.projectTitle}
                           disabled
                         />
-                        <Grid columns="3">
+                        <Grid doubling stackable columns="4">
                           <Grid.Column>
                             <p>Start Date:</p>{" "}
                             <Input id="startDate" type="date" disabled />
@@ -120,7 +120,7 @@ const ProjectDetailsModal = ({
                           fluid
                           // value={e.projectTitle}
                         />
-                        <Grid columns="3">
+                        <Grid doubling stackable columns="4">
                           <Grid.Column>
                             <p>Start Date:</p>{" "}
                             <Input id="startDate" type="date" />

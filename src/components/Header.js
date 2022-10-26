@@ -11,12 +11,11 @@ const TopNav = () => {
       verticalAlign="middle"
       divided
     >
-      <Grid.Column >
-        <Header as="h3">Freelance Management</Header>
-      </Grid.Column>
-      <Grid.Column textAlign="right">
-        <Icon className="avatar" name="user circle" size="big" />
-      </Grid.Column>
+      <Grid.Row>
+        <Header as="h3">Project Management</Header>
+        {/* <Icon textAlign='right' className="avatar" name="user circle" size="big" /> */}
+      </Grid.Row>
+       
     </Grid>
   );
 };
