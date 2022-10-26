@@ -1,0 +1,27 @@
+.main-wrapper {
+    position: relative;
+   min-height: 80vh;
+}
+
+.add-square {
+    
+     position: fixed;
+     z-index: 9999;
+     right: 80px;
+     bottom: 30px;
+    cursor: pointer;
+    color: rgb(81, 0, 255);
+      color: black;
+}
+
+.modal-content {
+  background-color: rgb(238, 238, 238) !important;
+}
+
+.form-wrapper p {
+  font-weight: bold;
+  margin: 0px;
+  padding: 10px 4px 3px;
+}
+
+ 

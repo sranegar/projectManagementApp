@@ -1,0 +1,21 @@
+.avatar {
+  cursor: pointer;
+}
+
+.head {
+  background-color: #f7ef1e;
+  padding: 10px 15px !important;
+}
+
+.bottom-nav {
+  background-color: rgb(247, 239, 30);
+}
+
+.body-container {
+  background-color: rgb(255, 255, 255);
+  height: 80vh;
+}
+
+.nav-icon {
+    cursor: pointer;
+}
