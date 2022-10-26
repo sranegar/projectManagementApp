@@ -24,4 +24,26 @@
   padding: 10px 4px 3px;
 }
 
+.project-card {
+  min-width: 250px;
+box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px !important;
+   transition: all 0.4s;
+    opacity: 80%;
+}
+
+.project-card:hover {
+  cursor: pointer;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px !important;
+    transition: all 0.4s;
+    opacity: 100%;
+}
+
+input {
+  border: 1px solid black !important;
+}
+
+   input::-webkit-calendar-picker-indicator {
+    cursor: pointer;
+  }
+ 
  

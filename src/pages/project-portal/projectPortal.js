@@ -7,9 +7,8 @@ import {
   Segment,
   Modal,
   Input,
-  Label,
   TextArea,
-  Form,
+  Label,
 } from "semantic-ui-react";
 import "./main.css";
 import { useState, useEffect } from "react";
@@ -22,6 +21,7 @@ import {
   deleteDoc,
 } from "firebase/firestore";
 import { db } from "../../config/firebase-config";
+import ProjectDetailsModal from "./DetailsModal";
 
 const Main = () => {
   const [client, setClientName] = useState("");
@@ -29,9 +29,14 @@ const Main = () => {
   const [description, setDescription] = useState("");
   const [start, setStartDate] = useState("");
   const [end, setEndDate] = useState("");
-  const [status, setStatus] = useState(1);
+  const [status, setStatus] = useState(false);
+
+  const [viewDetails, setViewDetails] = useState("");
+  const [view, setView] = useState("");
 
   const [open, setOpen] = useState(false);
+  const [showDetailsModal, setShowDetailsModal] = useState(false);
+
   const [epics, setEpics] = useState([]);
   const epicsCollectionRef = collection(db, "epics");
 
@@ -45,12 +50,25 @@ const Main = () => {
       status: status,
     });
     setOpen(false);
-
   };
 
   const openModal = () => {
     setOpen(!open);
-  }
+  };
+
+  const openDetailsModal = async () => {
+    setShowDetailsModal(!showDetailsModal);
+    // const found = epics.find((e) => {
+    //   return e.id === viewDetails;
+    // });
+    // console.log(found)
+  };
+
+  // const formValidation = () => {
+  //   if (client === "") {
+  //     alert("fill out fields yo")
+  //   }
+  // }
 
   useEffect(() => {
     const getEpics = async () => {
@@ -63,7 +81,7 @@ const Main = () => {
       );
     };
     getEpics();
-  }, [createEpic]);
+  }, []);
 
   return (
     <Grid padded doubling stackable className="main-wrapper">
@@ -73,7 +91,6 @@ const Main = () => {
           onOpen={() => setOpen(true)}
           open={open}
           closeIcon
-         
         >
           <Modal.Header style={{ backgroundColor: "#f7ef1e" }}>
             Add New Project
@@ -155,6 +172,19 @@ const Main = () => {
             </Segment>
           </Modal.Content>
         </Modal>
+        <ProjectDetailsModal
+          showModal={showDetailsModal}
+          setShowModal={setShowDetailsModal}
+          db={db}
+          epics={epics}
+          setEpics={setEpics}
+          epicsCollectionRef={epicsCollectionRef}
+          cardID={viewDetails}
+          deleteDoc={deleteDoc}
+          doc={doc}
+          updateDoc={updateDoc}
+          view={view}
+        />
         <Grid.Column>
           <Segment padded="very" secondary style={{ paddingBottom: "60px" }}>
             <Grid columns="2">
@@ -179,39 +209,104 @@ const Main = () => {
               >
                 In Progress
               </Header>
-              <Grid stackable columns="3" padded>
+              <Grid doubling stackable columns="3" padded>
                 {epics.map((epic) => {
-                  return (
-                    <Grid.Column style={{ padding: "20px 40px" }} key={epic.id}>
-                      <Card
-                        raised
-                        fluid
-                        color="green"
-                        style={{ padding: "10px" }}
+                  if (epic.status === false) {
+                    return (
+                      <Grid.Column
+                        style={{ padding: "20px 40px" }}
+                        key={epic.id}
                       >
-                        <Card.Content>
-                          <Card.Header>{epic.clientName}</Card.Header>
-                          <Card.Meta>{epic.projectTitle}</Card.Meta>
+                        <Card
+                          className="project-card"
+                          raised
+                          fluid
+                          color="green"
+                          style={{ padding: "10px" }}
+                          onClick={() => {
+                            openDetailsModal();
+                            setViewDetails(epic.id);
+                          }}
+                        >
+                          <Card.Content>
+                            <Card.Header>{epic.clientName}</Card.Header>
+                            <Card.Meta>{epic.projectTitle}</Card.Meta>
 
-                          <Card.Description
-                            style={{
-                              minHeight: "100px",
-                              padding: "8px",
-                            }}
-                            content={epic.description}
-                          />
-                        </Card.Content>
-                        <Card.Content extra>
-                          <Grid columns="2">
-                            <Grid.Column># Tasks</Grid.Column>
-                            <Grid.Column textAlign="right">
-                              <p>{epic.startDate}</p>
-                            </Grid.Column>
-                          </Grid>
-                        </Card.Content>
-                      </Card>
-                    </Grid.Column>
-                  );
+                            <Card.Description
+                              style={{
+                                minHeight: "100px",
+                                padding: "8px",
+                              }}
+                              content={epic.description}
+                            />
+                          </Card.Content>
+                          <Card.Content extra>
+                            <Grid columns="2">
+                              <Grid.Column># Tasks</Grid.Column>
+                              <Grid.Column textAlign="right">
+                                <p>{epic.startDate}</p>
+                              </Grid.Column>
+                            </Grid>
+                          </Card.Content>
+                        </Card>
+                      </Grid.Column>
+                    );
+                  }
+                })}
+              </Grid>
+            </Segment>
+
+            <Segment textAlign="left" style={{ marginTop: "20px" }}>
+              <Header
+                as="h4"
+                color="violet"
+                style={{ padding: "5 5 0", margin: "0px" }}
+              >
+                Complete
+              </Header>
+              <Grid doubling stackable columns="3" padded>
+                {epics.map((epic) => {
+                  if (epic.status === true) {
+                    return (
+                      <Grid.Column
+                        style={{ padding: "20px 40px" }}
+                        key={epic.id}
+                      >
+                        <Card
+                          className="project-card"
+                          raised
+                          fluid
+                          color="purple"
+                          style={{ padding: "10px" }}
+                          onClick={() => {
+                            openDetailsModal();
+                            setViewDetails(epic.id);
+                          }}
+                        >
+                          <Card.Content>
+                            <Card.Header>{epic.clientName}</Card.Header>
+                            <Card.Meta>{epic.projectTitle}</Card.Meta>
+
+                            <Card.Description
+                              style={{
+                                minHeight: "100px",
+                                padding: "8px",
+                              }}
+                              content={epic.description}
+                            />
+                          </Card.Content>
+                          <Card.Content extra>
+                            <Grid columns="2">
+                              <Grid.Column># Tasks</Grid.Column>
+                              <Grid.Column textAlign="right">
+                                <p>{epic.startDate}</p>
+                              </Grid.Column>
+                            </Grid>
+                          </Card.Content>
+                        </Card>
+                      </Grid.Column>
+                    );
+                  }
                 })}
               </Grid>
             </Segment>

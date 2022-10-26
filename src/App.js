@@ -3,6 +3,8 @@ import "./App.css";
 // import { collection, doc, getDocs, addDoc, updateDoc, deleteDoc } from "firebase/firestore";
 import "semantic-ui-css/semantic.min.css";
 import AppRoutes from './config/routes';
+ 
+
 function App() {
   // const [newName, setNewName] = useState("");
   // const [newTitle, setNewTitle] = useState("");

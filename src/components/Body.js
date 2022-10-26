@@ -1,7 +1,7 @@
 import TopNav from "./Header";
 import Menu from "./Menu";
 import "./components.css";
-import { Outlet } from "react-router-dom";
+import { Outlet } from 'react-router-dom';
 
 const Body = () => {
   return (
