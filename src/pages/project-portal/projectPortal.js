@@ -8,7 +8,6 @@ import {
   Modal,
   Input,
   TextArea,
-  Label,
 } from "semantic-ui-react";
 import "./main.css";
 import { useState, useEffect } from "react";
@@ -24,6 +23,7 @@ import { db } from "../../config/firebase-config";
 import ProjectDetailsModal from "./DetailsModal";
 
 const Main = () => {
+  //Add epic form variables
   const [client, setClientName] = useState("");
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
@@ -31,15 +31,19 @@ const Main = () => {
   const [end, setEndDate] = useState("");
   const [status, setStatus] = useState(false);
 
-  const [viewDetails, setViewDetails] = useState("");
-  const [view, setView] = useState("");
+  //View details modal variables  
+  const [epicByID, setEpicByID] = useState("");
+  const [curCard, setCurCard] = useState("");
 
+  //Add epic form modal variables
   const [open, setOpen] = useState(false);
   const [showDetailsModal, setShowDetailsModal] = useState(false);
 
+  //Data variables
   const [epics, setEpics] = useState([]);
   const epicsCollectionRef = collection(db, "epics");
 
+  //Create epic 
   const createEpic = async () => {
     await addDoc(epicsCollectionRef, {
       clientName: client,
@@ -52,18 +56,31 @@ const Main = () => {
     setOpen(false);
   };
 
+  //Open add epic form modal
   const openModal = () => {
     setOpen(!open);
   };
 
-  const openDetailsModal = async () => {
+  //View epic details modal
+  const openDetailsModal = (id) => {
     setShowDetailsModal(!showDetailsModal);
-    // const found = epics.find((e) => {
-    //   return e.id === viewDetails;
-    // });
-    // console.log(found)
-  };
 
+     const epic = epics.find((e) => {
+         return id === e.id ;
+       });
+ 
+    setCurCard(epic)
+  
+  };
+ 
+    // function viewEpicByID() {
+    //   const epicByID = epics.find((e) => {
+    //     return epicsByID === e.id;
+    //   });
+    //   setCurCard(epicByID);
+    // }
+  
+ 
   // const formValidation = () => {
   //   if (client === "") {
   //     alert("fill out fields yo")
@@ -86,6 +103,7 @@ const Main = () => {
   return (
     <Grid padded doubling stackable className="main-wrapper">
       <Grid.Column>
+        {/* add epic form modal */}
         <Modal
           onClose={() => setOpen(false)}
           onOpen={() => setOpen(true)}
@@ -172,6 +190,7 @@ const Main = () => {
             </Segment>
           </Modal.Content>
         </Modal>
+        {/* Pass props to view epic details modal child */}
         <ProjectDetailsModal
           showModal={showDetailsModal}
           setShowModal={setShowDetailsModal}
@@ -179,12 +198,14 @@ const Main = () => {
           epics={epics}
           setEpics={setEpics}
           epicsCollectionRef={epicsCollectionRef}
-          cardID={viewDetails}
+          cardID={epicByID}
           deleteDoc={deleteDoc}
           doc={doc}
           updateDoc={updateDoc}
-          view={view}
+          epicByID={epicByID}
+          curCard={curCard}
         />
+        {/* project portal body */}
         <Grid.Column>
           <Segment padded="very" secondary style={{ paddingBottom: "60px" }}>
             <Grid columns="2">
@@ -224,8 +245,7 @@ const Main = () => {
                           color="green"
                           style={{ padding: "10px" }}
                           onClick={() => {
-                            openDetailsModal();
-                            setViewDetails(epic.id);
+                            openDetailsModal(epic.id);
                           }}
                         >
                           <Card.Content>
@@ -279,8 +299,7 @@ const Main = () => {
                           color="purple"
                           style={{ padding: "10px" }}
                           onClick={() => {
-                            openDetailsModal();
-                            setViewDetails(epic.id);
+                            openDetailsModal(epic.id);         
                           }}
                         >
                           <Card.Content>
