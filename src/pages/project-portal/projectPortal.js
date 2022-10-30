@@ -89,6 +89,7 @@ const Main = () => {
   //Open add epic form modal
   const openModal = () => {
     setOpen(!open);
+    setFormValues(initialValues);
   };
 
   //View epic details modal
@@ -171,7 +172,7 @@ const Main = () => {
                         {formErrors.projectTitle}
                       </Label>
                     ) : null}
-                    <Grid stackable columns="4">
+                    <Grid stackable columns="2">
                       <Grid.Column>
                         <p>
                           Start Date{" "}
