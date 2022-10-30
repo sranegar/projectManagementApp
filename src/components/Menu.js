@@ -2,6 +2,7 @@ import { Grid, Icon} from "semantic-ui-react";
 import "./components.css";
 
 const Menu = () => {
+  
   return (
     <Grid divided columns="3" padded className="bottom-nav">
       <Grid.Column textAlign="center" verticalAlign="middle">

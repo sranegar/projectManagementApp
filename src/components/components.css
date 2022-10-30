@@ -3,9 +3,11 @@
 }
 
 .head {
-  
-  background-color: #f7ef1e;
+  background-color: rgb(247, 239, 30);
+  max-width: 100vw;
   padding: 10px 15px !important;
+ 
+ 
 }
 
 .bottom-nav {
@@ -23,5 +25,5 @@
 }
 
 .nav-icon {
-    cursor: pointer;
+  cursor: pointer;
 }

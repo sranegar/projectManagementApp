@@ -12,7 +12,7 @@ const TopNav = () => {
       divided
     >
       <Grid.Row>
-        <Header as="h3">Project Management</Header>
+        <Header as="h3">RockSTAR</Header>
         {/* <Icon textAlign='right' className="avatar" name="user circle" size="big" /> */}
       </Grid.Row>
        

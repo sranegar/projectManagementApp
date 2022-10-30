@@ -8,6 +8,7 @@ import {
   Modal,
   Input,
   TextArea,
+  Label,
 } from "semantic-ui-react";
 import "./main.css";
 import { useState, useEffect } from "react";
@@ -24,14 +25,19 @@ import ProjectDetailsModal from "./DetailsModal";
 
 const Main = () => {
   //Add epic form variables
-  const [client, setClientName] = useState("");
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
-  const [start, setStartDate] = useState("");
-  const [end, setEndDate] = useState("");
-  const [status, setStatus] = useState(false);
+  const initialValues = {
+    clientName: "",
+    projectTitle: "",
+    description: "",
+    startDate: "",
+    endDate: "",
+    status: false,
+  };
+  const [formValues, setFormValues] = useState(initialValues);
+  const [formErrors, setFormErrors] = useState({});
+  const [isSubmit, setIsSubmit] = useState(false);
 
-  //View details modal variables  
+  //View details modal variables
   const [epicByID, setEpicByID] = useState("");
   const [curCard, setCurCard] = useState("");
 
@@ -42,19 +48,43 @@ const Main = () => {
   //Data variables
   const [epics, setEpics] = useState([]);
   const epicsCollectionRef = collection(db, "epics");
-
-  //Create epic 
+  const [tasks, setTasks] = useState([]);
+ 
+  //Create epic
   const createEpic = async () => {
-    await addDoc(epicsCollectionRef, {
-      clientName: client,
-      projectTitle: title,
-      startDate: start,
-      endDate: end,
-      description: description,
-      status: status,
-    });
+
+    await addDoc(epicsCollectionRef, formValues);
     setOpen(false);
   };
+
+  const handleOnChange = (e) => {
+    const { name, value } = e.target;
+    setFormValues({ ...formValues, [name]: value });
+  
+   
+  };
+ 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setFormErrors(validate(formValues));
+    setIsSubmit(true);
+
+  }
+
+  const validate = (values) => {
+    const errors = {}
+    if (!values.clientName) {
+      errors.clientName = "Client name is required!"
+    }
+    if (!values.projectTitle) {
+      errors.projectTitle = "Project title is required!"
+    }
+    if (!values.description) {
+      errors.description = "Project description is required!";
+    }
+    return errors;
+  };
+  
 
   //Open add epic form modal
   const openModal = () => {
@@ -65,27 +95,15 @@ const Main = () => {
   const openDetailsModal = (id) => {
     setShowDetailsModal(!showDetailsModal);
 
-     const epic = epics.find((e) => {
-         return id === e.id ;
-       });
- 
-    setCurCard(epic)
-  
+    const epic = epics.find((e) => {
+      return id === e.id;
+    });
+
+    setCurCard(epic);
+    setFormValues(epic);
   };
+
  
-    // function viewEpicByID() {
-    //   const epicByID = epics.find((e) => {
-    //     return epicsByID === e.id;
-    //   });
-    //   setCurCard(epicByID);
-    // }
-  
- 
-  // const formValidation = () => {
-  //   if (client === "") {
-  //     alert("fill out fields yo")
-  //   }
-  // }
 
   useEffect(() => {
     const getEpics = async () => {
@@ -97,9 +115,13 @@ const Main = () => {
         }))
       );
     };
+ 
+    if (Object.keys(formErrors).length === 0 && isSubmit) {
+      createEpic();
+    }
     getEpics();
-  }, []);
-
+  }, [formErrors]);
+ 
   return (
     <Grid padded doubling stackable className="main-wrapper">
       <Grid.Column>
@@ -109,6 +131,7 @@ const Main = () => {
           onOpen={() => setOpen(true)}
           open={open}
           closeIcon
+          size="small"
         >
           <Modal.Header style={{ backgroundColor: "#f7ef1e" }}>
             Add New Project
@@ -116,75 +139,104 @@ const Main = () => {
           <Modal.Content className="modal-content">
             <Segment padded>
               <Grid doubling stackable centered className="form-wrapper">
+                {/* <pre>{JSON.stringify(formValues, undefined, 10)}</pre>  */}
                 <Grid.Column>
-                  <p>Client Name:</p>
-                  <Input
-                    id="clientName"
-                    type="text"
-                    fluid
-                    placeholder="Client Name"
-                    onChange={(event) => {
-                      setClientName(event.target.value);
-                    }}
-                  />
-                  <p>Project Title:</p>
-                  <Input
-                    id="projectTitle"
-                    type="text"
-                    fluid
-                    placeholder="Project Title"
-                    onChange={(event) => {
-                      setTitle(event.target.value);
-                    }}
-                  />
-                  <Grid   stackable columns="4">
-                    <Grid.Column>
-                      <p>Start Date:</p>{" "}
-                      <Input
-                        id="startDate"
-                        type="date"
-                        onChange={(event) => {
-                          setStartDate(event.target.value);
-                        }}
-                      />
-                    </Grid.Column>
-                    <Grid.Column>
-                      <p
-                        style={{
-                          margin: "0px",
-                          padding: "10px 4px 3px",
-                          fontWeight: "bold",
-                        }}
-                      >
-                        End Date (optional):
-                      </p>{" "}
-                      <Input
-                        id="endDate"
-                        type="date"
-                        onChange={(event) => {
-                          setEndDate(event.target.value);
-                        }}
-                      />
-                    </Grid.Column>
-                  </Grid>
-                  <p>Description:</p>
-                  <TextArea
-                    id="description"
-                    style={{ minHeight: 100, width: "100%", padding: "10px" }}
-                    placeholder="Brief description of project..."
-                    onChange={(event) => {
-                      setDescription(event.target.value);
-                    }}
-                  />
-                </Grid.Column>
-              </Grid>
+                  <form onSubmit={handleSubmit}>
+                    <p>Client Name:</p>
+                    <Input
+                      name="clientName"
+                      type="text"
+                      fluid
+                      placeholder="Client Name"
+                      value={formValues.clientName}
+                      onChange={handleOnChange}
+                    />
 
-              <Grid>
-                <Grid.Column>
-                  {" "}
-                  <Button color="green" floated="right" onClick={createEpic}>
-                    Save Project
-                  </Button>
+                    {formErrors.clientName ? (
+                      <Label basic color="red" pointing>
+                        {formErrors.clientName}
+                      </Label>
+                    ) : null}
+                    <p>Project Title:</p>
+                    <Input
+                      name="projectTitle"
+                      type="text"
+                      fluid
+                      placeholder="Project Title"
+                      value={formValues.projectTitle}
+                      onChange={handleOnChange}
+                    />
+                    {formErrors.projectTitle ? (
+                      <Label basic color="red" pointing>
+                        {formErrors.projectTitle}
+                      </Label>
+                    ) : null}
+                    <Grid stackable columns="4">
+                      <Grid.Column>
+                        <p>
+                          Start Date{" "}
+                          <span style={{ color: "red", fontStyle: "italic" }}>
+                            (optional)
+                          </span>
+                          :
+                        </p>{" "}
+                        <Input
+                          name="startDate"
+                          type="date"
+                          value={formValues.startDate}
+                          onChange={handleOnChange}
+                        />
+                      </Grid.Column>
+                      <Grid.Column>
+                        <p
+                          style={{
+                            margin: "0px",
+                            padding: "10px 4px 3px",
+                            fontWeight: "bold",
+                          }}
+                        >
+                          End Date{" "}
+                          <span style={{ color: "red", fontStyle: "italic" }}>
+                            (optional)
+                          </span>
+                          :
+                        </p>{" "}
+                        <Input
+                          name="endDate"
+                          type="date"
+                          value={formValues.endDate}
+                          onChange={handleOnChange}
+                        />
+                      </Grid.Column>
+                    </Grid>
+
+                    <p>Description:</p>
+                    <TextArea
+                      name="description"
+                      style={{ minHeight: 100, width: "100%", padding: "10px" }}
+                      placeholder="Brief description of project..."
+                      value={formValues.description}
+                      onChange={handleOnChange}
+                    />
+                    {formErrors.description ? (
+                      <Label basic color="red" pointing>
+                        {formErrors.description}
+                      </Label>
+                    ) : null}
+
+                    <Grid>
+                      <Grid.Column>
+                        {" "}
+                        <Button
+                          color="green"
+                          floated="right"
+                          // onClick={createEpic}
+                        >
+                          Save Project
+                        </Button>
+                      </Grid.Column>
+                    </Grid>
+                  </form>
                 </Grid.Column>
               </Grid>
             </Segment>
@@ -204,6 +256,7 @@ const Main = () => {
           updateDoc={updateDoc}
           epicByID={epicByID}
           curCard={curCard}
+          initValues={formValues}
         />
         {/* project portal body */}
         <Grid.Column>
@@ -299,7 +352,7 @@ const Main = () => {
                           color="purple"
                           style={{ padding: "10px" }}
                           onClick={() => {
-                            openDetailsModal(epic.id);         
+                            openDetailsModal(epic.id);
                           }}
                         >
                           <Card.Content>
