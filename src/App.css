@@ -3,3 +3,7 @@
   min-height: 100vh;
   background-color: #dbdbdb;
 }
+
+ p{
+   font-size: 12px !important;
+}

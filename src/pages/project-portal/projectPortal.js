@@ -87,6 +87,7 @@ const Main = () => {
     if (!values.description) {
       errors.description = "Project description is required!";
     }
+
     return errors;
   };
 
@@ -146,6 +147,7 @@ const Main = () => {
                   <form onSubmit={handleSubmit}>
                     <p>Client Name:</p>
                     <Input
+                      size="mini"
                       name="clientName"
                       type="text"
                       fluid
@@ -161,6 +163,7 @@ const Main = () => {
                     ) : null}
                     <p>Project Title:</p>
                     <Input
+                      size="mini"
                       name="projectTitle"
                       type="text"
                       fluid
@@ -189,6 +192,7 @@ const Main = () => {
                           :
                         </p>{" "}
                         <Input
+                          size="mini"
                           name="startDate"
                           type="date"
                           value={formValues.startDate}
@@ -216,6 +220,7 @@ const Main = () => {
                           :
                         </p>{" "}
                         <Input
+                          size="mini"
                           name="endDate"
                           type="date"
                           value={formValues.endDate}
@@ -244,7 +249,8 @@ const Main = () => {
                         <Button
                           color="green"
                           floated="right"
-                          // onClick={createEpic}
+                          size="mini"
+                          
                         >
                           Save Project
                         </Button>

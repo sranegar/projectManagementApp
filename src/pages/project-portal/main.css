@@ -15,8 +15,10 @@
       color: black;
 }
 
+ 
 .modal-content {
   background-color: #eeeeee !important;
+  padding: 6px !important;
 }
 
 .ui.small.modal>.header:not(.ui) {
@@ -24,10 +26,21 @@
   
 }
 
+ 
+
+.ui.medium.modal>.header:not(.ui) {
+    background: linear-gradient(45deg,#ed9b03 20%, #e49d18 80%, #ed9b03 100%) !important;
+  
+}
+
+textarea {
+  font-size: 12px !important;
+}
+
 .form-wrapper p {
   font-weight: bold;
   margin: 0px;
-  padding: 10px 4px 3px;
+  
 }
 
 .project-card {
