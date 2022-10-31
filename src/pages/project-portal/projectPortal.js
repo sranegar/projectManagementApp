@@ -86,11 +86,12 @@ const Main = () => {
     return errors;
   };
   
-
+ 
   //Open add epic form modal
   const openModal = () => {
     setOpen(!open);
     setFormValues(initialValues);
+    
   };
 
   //View epic details modal
@@ -103,6 +104,7 @@ const Main = () => {
 
     setCurCard(epic);
     setFormValues(epic);
+     setTasks(epic.tasks);
   };
 
  
@@ -259,6 +261,7 @@ const Main = () => {
           epicByID={epicByID}
           curCard={curCard}
           initValues={formValues}
+          tasks={tasks}
         />
         {/* project portal body */}
         <Grid.Column>

@@ -46,6 +46,15 @@
   font-variant-caps: all-petite-caps !important;
 }
 
+.ui.divided.list>.item {
+  padding: 10px 0px !important;
+
+}
+
+.ui.divided.list>.item:hover {
+  cursor: pointer !important;
+}
+
 input {
   border: 1px solid black !important;
 }

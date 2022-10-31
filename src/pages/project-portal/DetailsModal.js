@@ -23,6 +23,7 @@ const ProjectDetailsModal = ({
   updateDoc,
   curCard,
   initValues,
+  tasks,
 }) => {
   const [activeIndex, setActiveIndex] = useState(0);
   const [editMode, setEditMode] = useState(false);
@@ -51,7 +52,6 @@ const ProjectDetailsModal = ({
     setEditMode(false);
     setShowModal(false);
   };
- 
 
   // let chb = document.getElementById("checkboxInput");
   // console.log(Object.values({chb}).map((c) => {return c.checked}));
@@ -89,6 +89,7 @@ const ProjectDetailsModal = ({
 
   function handleOnClick(e, titleProps) {
     const { index } = titleProps;
+
     const newIndex = activeIndex === index ? -1 : index;
     setActiveIndex(newIndex);
   }
@@ -98,6 +99,8 @@ const ProjectDetailsModal = ({
       updateEpic(curCard.id);
     }
   }, [formErrors]);
+
+  console.log(tasks);
 
   return (
     <Grid>
@@ -186,26 +189,49 @@ const ProjectDetailsModal = ({
                           <Grid.Column width="14">
                             <Accordion styled>
                               <Accordion.Title
-                                active={activeIndex === 0}
+                                active={activeIndex === -1}
                                 index={0}
                                 onClick={handleOnClick}
                               >
                                 {" "}
                                 <p>
                                   <Icon name="dropdown" />
-                                  Tasks (#)
+                                  Tasks ({tasks ? `${tasks.length}` : 0})
                                 </p>
                               </Accordion.Title>
-
-                              <Accordion.Content active={activeIndex === -1}>
-                                <Segment>
-                                  <List bulleted>
-                                    {/* <List.Item>Task One</List.Item>
-                                      <List.Item>Task Two</List.Item>
-                                      <List.Item>Task Three</List.Item> */}
-                                  </List>
-                                </Segment>
-                              </Accordion.Content>
+                              {tasks ? (
+                                <Accordion.Content active={activeIndex === -1}>
+                                  <List divided>
+                                    {tasks.map((t) => (
+                                      <List.Item>
+                                        <Grid columns="2" padded>
+                                          <Grid.Column width="1">
+                                            <Checkbox checked={t.status} />
+                                          </Grid.Column>
+                                          <Grid.Column width="14">
+                                            <List.Header
+                                              style={{
+                                                textTransform: "uppercase",
+                                                color: "#2185d0",
+                                                fontVariantCaps:
+                                                  "all-petite-caps",
+                                                fontSize: "18px",
+                                              }}
+                                            >
+                                              {t.title}
+                                            </List.Header>
+                                            <List.Content
+                                              style={{ fontSize: "12px" }}
+                                            >
+                                              {t.details}
+                                            </List.Content>
+                                          </Grid.Column>
+                                        </Grid>
+                                      </List.Item>
+                                    ))}
+                                  </List>{" "}
+                                </Accordion.Content>
+                              ) : undefined}
                             </Accordion>
                           </Grid.Column>
 
