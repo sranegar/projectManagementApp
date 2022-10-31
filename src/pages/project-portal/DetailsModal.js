@@ -17,21 +17,17 @@ import Moment from "react-moment";
 const ProjectDetailsModal = ({
   showModal,
   setShowModal,
-  epics,
-  cardID,
   doc,
   deleteDoc,
   db,
-  epic,
   updateDoc,
-  epicByID,
   curCard,
   initValues,
 }) => {
   const [activeIndex, setActiveIndex] = useState(0);
   const [editMode, setEditMode] = useState(false);
 
-  const [formValues, setFormValues] = useState(initValues);
+  const [values, setValues] = useState(initValues);
   const [formErrors, setFormErrors] = useState({});
   const [isSubmit, setIsSubmit] = useState(false);
 
@@ -45,25 +41,36 @@ const ProjectDetailsModal = ({
   //Update epic
   const openEditForm = () => {
     setEditMode(true);
-    setFormValues(initValues);
+    setValues(initValues);
   };
 
   const updateEpic = async (id) => {
     const epicDoc = doc(db, "epics", id);
 
-    await updateDoc(epicDoc, formValues);
+    await updateDoc(epicDoc, values);
     setEditMode(false);
     setShowModal(false);
   };
+  console.log(values);
+
+  let chb = document.getElementById("checkboxInput");
+  // console.log(Object.values({chb}).map((c) => {return c.checked}));
 
   const handleOnChange = (e) => {
     const { name, value } = e.target;
-    setFormValues({ ...formValues, [name]: value });
+
+    setValues({ ...values, [name]: value });
+  };
+
+  const onClick = (e) => {
+    const { name, checked } = e.target;
+    console.log(name, checked);
+    setValues({ ...values, [name]: checked });
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setFormErrors(validate(formValues));
+    setFormErrors(validate(values));
     setIsSubmit(true);
   };
 
@@ -88,7 +95,6 @@ const ProjectDetailsModal = ({
   }
 
   useEffect(() => {
-     
     if (Object.keys(formErrors).length === 0 && isSubmit) {
       updateEpic(curCard.id);
     }
@@ -112,7 +118,7 @@ const ProjectDetailsModal = ({
           <Modal.Header style={{ backgroundColor: "#f7ef1e" }}>
             {editMode ? "EDIT Project Details" : "Project Details"}
           </Modal.Header>
-          {/* <pre>{JSON.stringify(formValues, undefined, 10)}</pre> */}
+          <pre>{JSON.stringify(values, undefined, 10)}</pre>
           <Modal.Content className="modal-content">
             <Segment padded>
               <React.Fragment>
@@ -127,14 +133,14 @@ const ProjectDetailsModal = ({
                           type="text"
                           fluid
                           disabled
-                          value={initValues.clientName}
+                          value={curCard.clientName}
                         />
                         <p>Project Title:</p>
                         <Input
                           name="projectTitle"
                           type="text"
                           fluid
-                          value={initValues.projectTitle}
+                          value={curCard.projectTitle}
                           disabled
                         />
                         <Grid doubling stackable columns="2">
@@ -144,7 +150,7 @@ const ProjectDetailsModal = ({
                               name="startDate"
                               type="date"
                               disabled
-                              value={initValues.startDate}
+                              value={curCard.startDate}
                             />
                           </Grid.Column>
                           <Grid.Column>
@@ -161,7 +167,7 @@ const ProjectDetailsModal = ({
                               name="endDate"
                               type="date"
                               disabled
-                              value={initValues.endDate}
+                              value={curCard.endDate}
                             />
                           </Grid.Column>
                         </Grid>
@@ -174,8 +180,9 @@ const ProjectDetailsModal = ({
                             width: "100%",
                             padding: "10px",
                           }}
-                          value={initValues.description}
+                          value={curCard.description}
                         />
+
                         <Grid padded columns="2" stackable>
                           <Grid.Column width="14">
                             <Accordion styled>
@@ -202,6 +209,7 @@ const ProjectDetailsModal = ({
                               </Accordion.Content>
                             </Accordion>
                           </Grid.Column>
+
                           <Grid.Column width="2" style={{ padding: "20px" }}>
                             {" "}
                             <Button
@@ -211,6 +219,16 @@ const ProjectDetailsModal = ({
                               icon="add"
                               size="small"
                             ></Button>
+                          </Grid.Column>
+                        </Grid>
+                        <Grid padded>
+                          <Grid.Column>
+                            <Checkbox
+                              toggle
+                              disabled
+                              checked={curCard.status}
+                              label="Complete"
+                            />
                           </Grid.Column>
                         </Grid>
                         <Grid padded>
@@ -242,18 +260,12 @@ const ProjectDetailsModal = ({
                     ) : (
                       //Non edit epic details (view only
                       <React.Fragment>
-                        <p>
-                          Client Name:{" "}
-                          <span
-                            style={{ fontWeight: "lighter", color: "blue" }}
-                          >
-                            {formValues.clientName}
-                          </span>
-                        </p>
+                        <p>Client Name:</p>
                         <Input
                           name="clientName"
                           type="text"
                           fluid
+                          value={values.clientName}
                           onChange={handleOnChange}
                         />
                         {formErrors.clientName ? (
@@ -261,18 +273,12 @@ const ProjectDetailsModal = ({
                             {formErrors.clientName}
                           </Label>
                         ) : null}
-                        <p>
-                          Project Title:{" "}
-                          <span
-                            style={{ fontWeight: "lighter", color: "blue" }}
-                          >
-                            {formValues.projectTitle}
-                          </span>
-                        </p>
+                        <p>Project Title:</p>
                         <Input
                           name="projectTitle"
                           type="text"
                           fluid
+                          value={values.projectTitle}
                           onChange={handleOnChange}
                         />
                         {formErrors.projectTitle ? (
@@ -289,16 +295,12 @@ const ProjectDetailsModal = ({
                               >
                                 (optional)
                               </span>
-                              :{" "}
-                              <span
-                                style={{ fontWeight: "lighter", color: "blue" }}
-                              >
-                                {formValues.startDate}
-                              </span>
+                              :
                             </p>{" "}
                             <Input
                               name="startDate"
                               type="date"
+                              value={values.startDate}
                               onChange={handleOnChange}
                             />
                           </Grid.Column>
@@ -316,28 +318,17 @@ const ProjectDetailsModal = ({
                               >
                                 (optional)
                               </span>
-                              :{" "}
-                              <span
-                                style={{ fontWeight: "lighter", color: "blue" }}
-                              >
-                                {formValues.endDate}
-                              </span>
+                              :
                             </p>{" "}
                             <Input
                               name="endDate"
                               type="date"
+                              value={values.endDate}
                               onChange={handleOnChange}
                             />
                           </Grid.Column>
                         </Grid>
-                        <p>
-                          Description:{" "}
-                          <span
-                            style={{ fontWeight: "lighter", color: "blue" }}
-                          >
-                            {formValues.projectTitle}
-                          </span>
-                        </p>
+                        <p>Description:</p>
                         <TextArea
                           name="description"
                           style={{
@@ -345,13 +336,29 @@ const ProjectDetailsModal = ({
                             width: "100%",
                             padding: "10px",
                           }}
+                          value={values.description}
                           onChange={handleOnChange}
+                          id="description"
                         />
                         {formErrors.description ? (
                           <Label basic color="red" pointing>
                             {formErrors.description}
                           </Label>
                         ) : null}
+                        <Grid columns="16" padded verticalAlign="middle">
+                          <Grid.Column>
+                            <Checkbox
+                              toggle
+                              id="checkboxInput"
+                              name="status"
+                              type="checkbox"
+                              onClick={onClick}
+                              checked={values.status}
+                              label="Complete"
+                            />
+                          </Grid.Column>
+                        </Grid>
+
                         <Grid>
                           <Grid.Column>
                             {" "}

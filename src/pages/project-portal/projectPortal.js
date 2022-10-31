@@ -31,7 +31,7 @@ const Main = () => {
     description: "",
     startDate: "",
     endDate: "",
-    status: false,
+    status: null,
   };
   const [formValues, setFormValues] = useState(initialValues);
   const [formErrors, setFormErrors] = useState({});
@@ -58,6 +58,7 @@ const Main = () => {
   };
 
   const handleOnChange = (e) => {
+    
     const { name, value } = e.target;
     setFormValues({ ...formValues, [name]: value });
   
@@ -286,7 +287,7 @@ const Main = () => {
               </Header>
               <Grid doubling stackable columns="3" padded>
                 {epics.map((epic) => {
-                  if (epic.status === false) {
+                  if (epic.status === false || epic.status === null) {
                     return (
                       <Grid.Column
                         style={{ padding: "20px 40px" }}
