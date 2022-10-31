@@ -6,13 +6,13 @@ import TopNav
   from "./components/Header";
 import Menu from "./components/Menu";
 import Dashboard from "./pages/dashboard/dashboard";
+import Calendar from "./pages/calendar/calendar";
+ 
 function App() {
   
   return (
     <div className="App">
-      <TopNav/>
-      <Main/>
-      <Menu />
+     <Body/>
     </div>
   );
 }

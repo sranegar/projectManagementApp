@@ -11,7 +11,7 @@ import {
   TextArea,
 } from "semantic-ui-react";
 
-const Dashboard = () => {
+const Calendar = () => {
   const [open, setOpen] = useState(false);
 
   //Open add epic form modal
@@ -19,11 +19,13 @@ const Dashboard = () => {
     setOpen(!open);
   };
 
-  const myObj = [{
-    id: 1,
-    epic: "Name one"
-  },
-  {id: 2, epic: "Name two"}]
+  const myObj = [
+    {
+      id: 1,
+      epic: "Name one",
+    },
+    { id: 2, epic: "Name two" },
+  ];
 
   return (
     <Grid padded doubling stackable className="main-wrapper">
@@ -98,7 +100,7 @@ const Dashboard = () => {
                     color: "#eee",
                   }}
                 >
-                  Dashboard
+                  Timeline
                 </Header>
               </Grid.Column>
               {/* <Grid.Column textAlign="right">
@@ -144,7 +146,7 @@ const Dashboard = () => {
                 marginTop: "20px",
               }}
             >
-              <Header
+              {/* <Header
                 as="h4"
                 style={{
                   padding: "20px",
@@ -157,7 +159,7 @@ const Dashboard = () => {
                 }}
               >
                 Complete
-              </Header>
+              </Header> */}
               <Grid doubling stackable columns="4" padded>
                 <Grid.Column style={{ padding: "60px 20px" }}></Grid.Column>
               </Grid>
@@ -169,4 +171,4 @@ const Dashboard = () => {
   );
 };
 
-export default Dashboard;
+export default Calendar;
