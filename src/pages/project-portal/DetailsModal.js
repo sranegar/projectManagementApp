@@ -11,6 +11,7 @@ import {
   Icon,
   List,
   Label,
+  Header,
 } from "semantic-ui-react";
 import Moment from "react-moment";
 
@@ -23,7 +24,7 @@ const ProjectDetailsModal = ({
   updateDoc,
   curCard,
   initValues,
-  tasks,
+  viewTasks,
 }) => {
   const [activeIndex, setActiveIndex] = useState(0);
   const [editMode, setEditMode] = useState(false);
@@ -31,6 +32,12 @@ const ProjectDetailsModal = ({
   const [values, setValues] = useState(initValues);
   const [formErrors, setFormErrors] = useState({});
   const [isSubmit, setIsSubmit] = useState(false);
+
+  const [showAddTask, setShowAddTask] = useState(false);
+
+ 
+  const [newTasks, setNewTasks] = useState({});
+  const [tasksArray, setTasksArray] = useState(viewTasks);
 
   //Delete epic
   const deleteEpic = async (id) => {
@@ -53,13 +60,30 @@ const ProjectDetailsModal = ({
     setShowModal(false);
   };
 
+  // const updateAddTask = async (id) => {
+  //   const epicDoc = doc(db, "epics", id);
+
+  //    await updateDoc(epicDoc, values);
+  // }
+
   // let chb = document.getElementById("checkboxInput");
   // console.log(Object.values({chb}).map((c) => {return c.checked}));
 
   const handleOnChange = (e) => {
     const { name, value } = e.target;
-
     setValues({ ...values, [name]: value });
+  };
+
+  const handleAddTaskChange = (e) => {
+    const { name, value } = e.target;
+    setNewTasks({ ...newTasks, [name]: value });
+    setValues({
+      ...values,
+      tasks: [
+      ...tasksArray,
+      newTasks,
+      ]
+    });
   };
 
   const onClick = (e) => {
@@ -89,10 +113,16 @@ const ProjectDetailsModal = ({
 
   function handleOnClick(e, titleProps) {
     const { index } = titleProps;
-
     const newIndex = activeIndex === index ? -1 : index;
     setActiveIndex(newIndex);
   }
+
+  const openAddTaskForm = () => {
+    setShowAddTask(!showAddTask);
+    setActiveIndex(-1);
+    setValues(initValues);
+    setTasksArray(viewTasks);
+  };
 
   useEffect(() => {
     if (Object.keys(formErrors).length === 0 && isSubmit) {
@@ -100,8 +130,7 @@ const ProjectDetailsModal = ({
     }
   }, [formErrors]);
 
-  console.log(tasks);
-
+  console.log(values);
   return (
     <Grid>
       <Grid.Column>
@@ -110,6 +139,8 @@ const ProjectDetailsModal = ({
           onClose={() => {
             setShowModal(false);
             setEditMode(false);
+            setShowAddTask(false);
+            setActiveIndex(0);
           }}
           onOpen={() => setShowModal(true)}
           open={showModal}
@@ -120,7 +151,7 @@ const ProjectDetailsModal = ({
           <Modal.Header style={{ backgroundColor: "#f7ef1e" }}>
             {editMode ? "EDIT Project Details" : "Project Details"}
           </Modal.Header>
-          {/* <pre>{JSON.stringify(values, undefined, 10)}</pre> */}
+          <pre>{JSON.stringify(values, undefined, 10)}</pre>
           <Modal.Content className="modal-content">
             <Segment padded>
               <React.Fragment>
@@ -209,7 +240,7 @@ const ProjectDetailsModal = ({
 
                         <Grid padded columns="2" stackable>
                           <Grid.Column width="14">
-                            <Accordion styled>
+                            <Accordion>
                               <Accordion.Title
                                 active={activeIndex === -1}
                                 index={0}
@@ -218,40 +249,88 @@ const ProjectDetailsModal = ({
                                 {" "}
                                 <p>
                                   <Icon name="dropdown" />
-                                  Tasks ({tasks ? `${tasks.length}` : 0})
+                                  Tasks ({viewTasks ? `${viewTasks.length}` : 0}
+                                  )
                                 </p>
                               </Accordion.Title>
-                              {tasks ? (
+                              {viewTasks ? (
                                 <Accordion.Content active={activeIndex === -1}>
-                                  <List divided>
-                                    {tasks.map((t) => (
-                                      <List.Item>
-                                        <Grid columns="2" padded>
-                                          <Grid.Column width="1">
-                                            <Checkbox checked={t.status} />
-                                          </Grid.Column>
-                                          <Grid.Column width="14">
-                                            <List.Header
-                                              style={{
-                                                textTransform: "uppercase",
-                                                color: "#2185d0",
-                                                fontVariantCaps:
-                                                  "all-petite-caps",
-                                                fontSize: "18px",
-                                              }}
-                                            >
-                                              {t.title}
-                                            </List.Header>
-                                            <List.Content
-                                              style={{ fontSize: "12px" }}
-                                            >
-                                              {t.details}
-                                            </List.Content>
-                                          </Grid.Column>
-                                        </Grid>
-                                      </List.Item>
-                                    ))}
-                                  </List>{" "}
+                                  <Segment>
+                                    {showAddTask ? (
+                                      <Segment>
+                                        <form onSubmit={handleSubmit}>
+                                          <Header as="h4">Add New Task</Header>
+                                          <p style={{ fontSize: "12px" }}>
+                                            Task Title:
+                                          </p>
+                                          <Input
+                                            name="title"
+                                            size="mini"
+                                            fluid
+                                            onChange={handleAddTaskChange}
+                                          />
+                                          <p style={{ fontSize: "12px" }}>
+                                            Task Details:
+                                          </p>
+                                          <TextArea
+                                            style={{
+                                              minHeight: 20,
+                                              width: "100%",
+                                              padding: "10px",
+                                            }}
+                                            name="details"
+                                            placeholder="Details of task..."
+                                            onChange={handleAddTaskChange}
+                                          />
+                                          <Grid>
+                                            {" "}
+                                            <Grid.Column>
+                                              <Button
+                                                type="submit"
+                                                icon="add"
+                                                primary
+                                                floated="right"
+                                                size="mini"
+                                                content="Add Task"
+                                              />
+                                            </Grid.Column>
+                                          </Grid>
+                                        </form>
+                                      </Segment>
+                                    ) : undefined}
+                                    <List divided>
+                                      {viewTasks.map((t) => (
+                                        <List.Item>
+                                          <Grid
+                                            columns="2"
+                                            style={{ padding: "0px 10px" }}
+                                          >
+                                            <Grid.Column width="1">
+                                              <Checkbox checked={t.status} />
+                                            </Grid.Column>
+                                            <Grid.Column width="14">
+                                              <List.Header
+                                                style={{
+                                                  textTransform: "uppercase",
+                                                  color: "#2185d0",
+                                                  fontVariantCaps:
+                                                    "all-petite-caps",
+                                                  fontSize: "18px",
+                                                }}
+                                              >
+                                                {t.title}
+                                              </List.Header>
+                                              <List.Content
+                                                style={{ fontSize: "12px" }}
+                                              >
+                                                {t.details}
+                                              </List.Content>
+                                            </Grid.Column>
+                                          </Grid>
+                                        </List.Item>
+                                      ))}
+                                    </List>{" "}
+                                  </Segment>
                                 </Accordion.Content>
                               ) : undefined}
                             </Accordion>
@@ -260,11 +339,13 @@ const ProjectDetailsModal = ({
                           <Grid.Column width="2" style={{ padding: "20px" }}>
                             {" "}
                             <Button
-                              color="blue"
+                              color={!showAddTask ? "blue" : "red"}
+                              inverted
                               circular
                               floated="right"
-                              icon="add"
-                              size="small"
+                              icon={!showAddTask ? "add" : "close"}
+                              size="mini"
+                              onClick={openAddTaskForm}
                             ></Button>
                           </Grid.Column>
                         </Grid>

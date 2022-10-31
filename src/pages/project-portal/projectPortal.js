@@ -25,6 +25,7 @@ import ProjectDetailsModal from "./DetailsModal";
 
 const Main = () => {
   //Add epic form variables
+
   const initialValues = {
     clientName: "",
     projectTitle: "",
@@ -32,7 +33,15 @@ const Main = () => {
     startDate: "",
     endDate: "",
     status: null,
+    tasks: [
+        {
+        title: "",
+        details: "",
+        status: null,
+        },
+    ],
   };
+
   const [formValues, setFormValues] = useState(initialValues);
   const [formErrors, setFormErrors] = useState({});
   const [isSubmit, setIsSubmit] = useState(false);
@@ -48,50 +57,43 @@ const Main = () => {
   //Data variables
   const [epics, setEpics] = useState([]);
   const epicsCollectionRef = collection(db, "epics");
-  const [tasks, setTasks] = useState([]);
- 
+  const [viewTasks, setViewTasks] = useState([]);
+
   //Create epic
   const createEpic = async () => {
-
     await addDoc(epicsCollectionRef, formValues);
     setOpen(false);
   };
 
   const handleOnChange = (e) => {
-    
     const { name, value } = e.target;
     setFormValues({ ...formValues, [name]: value });
-  
-   
   };
- 
+
   const handleSubmit = (e) => {
     e.preventDefault();
     setFormErrors(validate(formValues));
     setIsSubmit(true);
-
-  }
+  };
 
   const validate = (values) => {
-    const errors = {}
+    const errors = {};
     if (!values.clientName) {
-      errors.clientName = "Client name is required!"
+      errors.clientName = "Client name is required!";
     }
     if (!values.projectTitle) {
-      errors.projectTitle = "Project title is required!"
+      errors.projectTitle = "Project title is required!";
     }
     if (!values.description) {
       errors.description = "Project description is required!";
     }
     return errors;
   };
-  
- 
+
   //Open add epic form modal
   const openModal = () => {
     setOpen(!open);
     setFormValues(initialValues);
-    
   };
 
   //View epic details modal
@@ -104,10 +106,8 @@ const Main = () => {
 
     setCurCard(epic);
     setFormValues(epic);
-     setTasks(epic.tasks);
+    setViewTasks(epic.tasks);
   };
-
- 
 
   useEffect(() => {
     const getEpics = async () => {
@@ -119,13 +119,13 @@ const Main = () => {
         }))
       );
     };
- 
+
     if (Object.keys(formErrors).length === 0 && isSubmit) {
       createEpic();
     }
     getEpics();
   }, [formErrors]);
- 
+
   return (
     <Grid padded doubling stackable className="main-wrapper">
       <Grid.Column>
@@ -271,7 +271,7 @@ const Main = () => {
           epicByID={epicByID}
           curCard={curCard}
           initValues={formValues}
-          tasks={tasks}
+          viewTasks={viewTasks}
         />
         {/* project portal body */}
         <Grid.Column>
@@ -303,9 +303,8 @@ const Main = () => {
                 style={{
                   padding: "20px",
                   margin: "0px",
-                  backgroundColor: "#e9e9e954 ",
+                  backgroundColor: "#b9b9b9  ",
                   borderLeft: "3px solid #57c672",
-                  color: "#eee",
                 }}
               >
                 In Progress
@@ -338,7 +337,7 @@ const Main = () => {
                           </Card.Content>
                           <Card.Content extra>
                             <Grid columns="2">
-                              <Grid.Column># Tasks</Grid.Column>
+                              <Grid.Column>{`(${epic.tasks.length}) Tasks`}</Grid.Column>
                               <Grid.Column textAlign="right">
                                 <p>{epic.startDate}</p>
                               </Grid.Column>
@@ -365,9 +364,8 @@ const Main = () => {
                 style={{
                   padding: "20px",
                   margin: "0px",
-                  backgroundColor: "#e9e9e954  ",
+                  backgroundColor: "#b9b9b9  ",
                   borderLeft: "3px solid #2185d0",
-                  color: "#eee",
                 }}
               >
                 Complete
@@ -400,7 +398,7 @@ const Main = () => {
                           </Card.Content>
                           <Card.Content extra>
                             <Grid columns="2">
-                              <Grid.Column># Tasks</Grid.Column>
+                              <Grid.Column>{`(${epic.tasks.length}) Tasks`}</Grid.Column>
                               <Grid.Column textAlign="right">
                                 <p>{epic.startDate}</p>
                               </Grid.Column>

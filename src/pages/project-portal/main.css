@@ -20,7 +20,7 @@
 }
 
 .ui.small.modal>.header:not(.ui) {
-    background: linear-gradient(45deg,#ed9b03 20%, #eda115 80%, #ed9b03 100%) !important;
+    background: linear-gradient(45deg,#ed9b03 20%, #e49d18 80%, #ed9b03 100%) !important;
   
 }
 
@@ -33,14 +33,14 @@
 .project-card {
   min-width: 150px;
    transition: all 0.4s;
-    opacity: 85%;
+    opacity: 90%;
 }
 
 .project-card:hover {
   cursor: pointer;
   box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px !important;
     transition: all 0.4s;
-    opacity: 95%;
+    opacity: 100%;
 }
 
 .ui.card>.extra, .ui.cards>.card>.extra {
@@ -53,7 +53,7 @@
 
 .ui.modal>.content {
     
-    background-color: rgb(115, 115, 115) !important;
+    background-color: #dbdbdb !important;
 }
 
 .ui.divided.list>.item {
