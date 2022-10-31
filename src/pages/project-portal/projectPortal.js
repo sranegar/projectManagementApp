@@ -139,128 +139,125 @@ const Main = () => {
           size="small"
         >
           <Modal.Header>Add New Project</Modal.Header>
-          <Modal.Content className="modal-content">
-            <Segment padded>
-              <Grid doubling stackable centered className="form-wrapper">
-                {/* <pre>{JSON.stringify(formValues, undefined, 10)}</pre>  */}
-                <Grid.Column>
-                  <form onSubmit={handleSubmit}>
-                    <p>Client Name:</p>
-                    <Input
-                      size="mini"
-                      name="clientName"
-                      type="text"
-                      fluid
-                      placeholder="Client Name"
-                      value={formValues.clientName}
-                      onChange={handleOnChange}
-                    />
+          <Modal.Content   className="modal-content">
+            <Segment padded secondary>
+              <Segment>
+                <Grid columns="1" doubling stackable className="form-wrapper">
+                  {/* <pre>{JSON.stringify(formValues, undefined, 10)}</pre>  */}
 
-                    {formErrors.clientName ? (
-                      <Label basic color="red" pointing>
-                        {formErrors.clientName}
-                      </Label>
-                    ) : null}
-                    <p>Project Title:</p>
-                    <Input
-                      size="mini"
-                      name="projectTitle"
-                      type="text"
-                      fluid
-                      placeholder="Project Title"
-                      value={formValues.projectTitle}
-                      onChange={handleOnChange}
-                    />
-                    {formErrors.projectTitle ? (
-                      <Label basic color="red" pointing>
-                        {formErrors.projectTitle}
-                      </Label>
-                    ) : null}
-                    <Grid stackable columns="2">
-                      <Grid.Column>
-                        <p>
-                          Start Date{" "}
-                          <span
-                            style={{
-                              color: "purple",
-                              fontStyle: "italic",
-                              fontWeight: "lighter",
-                            }}
-                          >
-                            (optional)
-                          </span>
-                          :
-                        </p>{" "}
-                        <Input
-                          size="mini"
-                          name="startDate"
-                          type="date"
-                          value={formValues.startDate}
-                          onChange={handleOnChange}
-                        />
-                      </Grid.Column>
-                      <Grid.Column>
-                        <p
-                          style={{
-                            margin: "0px",
-                            padding: "10px 4px 3px",
-                            fontWeight: "bold",
-                          }}
-                        >
-                          End Date{" "}
-                          <span
-                            style={{
-                              color: "purple",
-                              fontStyle: "italic",
-                              fontWeight: "lighter",
-                            }}
-                          >
-                            (optional)
-                          </span>
-                          :
-                        </p>{" "}
-                        <Input
-                          size="mini"
-                          name="endDate"
-                          type="date"
-                          value={formValues.endDate}
-                          onChange={handleOnChange}
-                        />
-                      </Grid.Column>
-                    </Grid>
+                  <Grid.Column>
+                    <form onSubmit={handleSubmit}>
+                      <p style={{ padding: "10px 0px 2px" }}>Client Name:</p>
+                      <Input
+                        size="mini"
+                        name="clientName"
+                        type="text"
+                        fluid
+                        placeholder="Client Name"
+                        value={formValues.clientName}
+                        onChange={handleOnChange}
+                      />
 
-                    <p>Description:</p>
-                    <TextArea
-                      name="description"
-                      style={{ minHeight: 100, width: "100%", padding: "10px" }}
-                      placeholder="Brief description of project..."
-                      value={formValues.description}
-                      onChange={handleOnChange}
-                    />
-                    {formErrors.description ? (
-                      <Label basic color="red" pointing>
-                        {formErrors.description}
-                      </Label>
-                    ) : null}
+                      {formErrors.clientName ? (
+                        <Label basic color="red" pointing size="tiny">
+                          {formErrors.clientName}
+                        </Label>
+                      ) : null}
+                      <p style={{ padding: "10px 0px 2px" }}>Project Title:</p>
+                      <Input
+                        size="mini"
+                        name="projectTitle"
+                        type="text"
+                        fluid
+                        placeholder="Project Title"
+                        value={formValues.projectTitle}
+                        onChange={handleOnChange}
+                      />
+                      {formErrors.projectTitle ? (
+                        <Label basic color="red" pointing size="tiny">
+                          {formErrors.projectTitle}
+                        </Label>
+                      ) : null}
+                      <Grid stackable columns="2">
+                        <Grid.Column>
+                          <p style={{ padding: "10px 0px 2px" }}>
+                            Start Date{" "}
+                            <span
+                              style={{
+                                color: "purple",
+                                fontStyle: "italic",
+                                fontWeight: "lighter",
+                              }}
+                            >
+                              (optional)
+                            </span>
+                            :
+                          </p>{" "}
+                          <Input
+                            size="mini"
+                            name="startDate"
+                            type="date"
+                            value={formValues.startDate}
+                            onChange={handleOnChange}
+                          />
+                        </Grid.Column>
+                        <Grid.Column>
+                          <p style={{ padding: "10px 0px 2px" }}>
+                            End Date{" "}
+                            <span
+                              style={{
+                                color: "purple",
+                                fontStyle: "italic",
+                                fontWeight: "lighter",
+                              }}
+                            >
+                              (optional)
+                            </span>
+                            :
+                          </p>{" "}
+                          <Input
+                            size="mini"
+                            name="endDate"
+                            type="date"
+                            value={formValues.endDate}
+                            onChange={handleOnChange}
+                          />
+                        </Grid.Column>
+                      </Grid>
 
-                    <Grid padded>
-                      <Grid.Column>
-                        {" "}
-                        <Button
-                          color="green"
-                          floated="right"
-                          size="mini"
-                          
-                        >
-                          Save Project
-                        </Button>
-                      </Grid.Column>
-                    </Grid>
-                  </form>
-                </Grid.Column>
-              </Grid>
+                      <p style={{ padding: "10px 0px 2px" }}>Description:</p>
+                      <TextArea
+                        name="description"
+                        style={{
+                          minHeight: 100,
+                          width: "100%",
+                          padding: "10px",
+                        }}
+                        placeholder="Brief description of project..."
+                        value={formValues.description}
+                        onChange={handleOnChange}
+                      />
+                      {formErrors.description ? (
+                        <Label basic color="red" pointing size="tiny">
+                          {formErrors.description}
+                        </Label>
+                      ) : null}
+
+                      <Grid padded>
+                        <Grid.Column>
+                          {" "}
+                          <Button color="green" floated="right" size="mini">
+                            Save Project
+                          </Button>
+                        </Grid.Column>
+                      </Grid>
+                    </form>
+                  </Grid.Column>
+                </Grid>
+              </Segment>
             </Segment>
           </Modal.Content>
+      
         </Modal>
         {/* Pass props to view epic details modal child */}
         <ProjectDetailsModal
@@ -281,15 +278,26 @@ const Main = () => {
         />
         {/* project portal body */}
         <Grid.Column>
-          <Segment inverted style={{ paddingBottom: "60px" }}>
-            <Grid columns="2">
+          <Segment
+            style={{ paddingBottom: "60px", backgroundColor: "#474747" }}
+          >
+            <Grid padded columns="2">
               <Grid.Column>
-                <Header inverted as="h2" style={{ paddingBottom: "10px" }}>
+                <Header
+                  inverted
+                  as="h2"
+                  style={{
+                    textTransform: "uppercase",
+                    fontFamily: "franklin gothic narrow",
+                    letterSpacing: "2px",
+                    color: "#eee",
+                  }}
+                >
                   Project Portal
                 </Header>
               </Grid.Column>
               <Grid.Column textAlign="right">
-                <Button color="blue" onClick={openModal}>
+                <Button color="orange" onClick={openModal}>
                   <Icon name="add" />
                   Add Project
                 </Button>
@@ -309,8 +317,11 @@ const Main = () => {
                 style={{
                   padding: "20px",
                   margin: "0px",
-                  backgroundColor: "#b9b9b9  ",
+                  backgroundColor: "#0f0710 ",
                   borderLeft: "3px solid #57c672",
+                  color: "#eee",
+                  fontWeight: "lighter",
+                  fontVariantCaps: "all-petite-caps",
                 }}
               >
                 In Progress
@@ -319,7 +330,10 @@ const Main = () => {
                 {epics.map((epic) => {
                   if (epic.status === false || epic.status === null) {
                     return (
-                      <Grid.Column style={{ padding: "20px" }} key={epic.id}>
+                      <Grid.Column
+                        style={{ padding: "60px 20px" }}
+                        key={epic.id}
+                      >
                         <Card
                           className="project-card"
                           raised
@@ -345,7 +359,9 @@ const Main = () => {
                             <Grid columns="2">
                               <Grid.Column>{`(${epic.tasks.length}) Tasks`}</Grid.Column>
                               <Grid.Column textAlign="right">
-                                <p>{epic.startDate}</p>
+                                <span style={{ fontSize: "14px" }}>
+                                  {epic.startDate}
+                                </span>
                               </Grid.Column>
                             </Grid>
                           </Card.Content>
@@ -370,8 +386,11 @@ const Main = () => {
                 style={{
                   padding: "20px",
                   margin: "0px",
-                  backgroundColor: "#b9b9b9  ",
+                  backgroundColor: "#0f0710 ",
                   borderLeft: "3px solid #2185d0",
+                  color: "#eee",
+                  fontWeight: "lighter",
+                  fontVariantCaps: "all-petite-caps",
                 }}
               >
                 Complete
@@ -380,7 +399,10 @@ const Main = () => {
                 {epics.map((epic) => {
                   if (epic.status === true) {
                     return (
-                      <Grid.Column style={{ padding: "20px" }} key={epic.id}>
+                      <Grid.Column
+                        style={{ padding: "60px 20px" }}
+                        key={epic.id}
+                      >
                         <Card
                           className="project-card"
                           raised
@@ -406,7 +428,9 @@ const Main = () => {
                             <Grid columns="2">
                               <Grid.Column>{`(${epic.tasks.length}) Tasks`}</Grid.Column>
                               <Grid.Column textAlign="right">
-                                <p>{epic.startDate}</p>
+                                <span style={{ fontSize: "14px" }}>
+                                  {epic.startDate}
+                                </span>
                               </Grid.Column>
                             </Grid>
                           </Card.Content>

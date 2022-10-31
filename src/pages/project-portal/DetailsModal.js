@@ -147,7 +147,7 @@ const ProjectDetailsModal = ({
           onOpen={() => setShowModal(true)}
           open={showModal}
           closeIcon
-          size="medium"
+          size="small"
         >
           <Modal.Header style={{ backgroundColor: "#f7ef1e" }}>
             {editMode ? "EDIT Project Details" : "Project Details"}
@@ -184,9 +184,9 @@ const ProjectDetailsModal = ({
                           />
                         </Grid.Column>
                       </Grid>
-                      <Grid doubling stackable columns="2">
-                        <Grid.Column>
-                          <p>
+                      <Grid doubling stackable columns="2" >
+                        <Grid.Column >
+                          <p >
                             Start Date{" "}
                             <span
                               style={{
@@ -209,11 +209,7 @@ const ProjectDetailsModal = ({
                         </Grid.Column>
                         <Grid.Column>
                           <p
-                            style={{
-                              margin: "0px",
-                              padding: "10px 4px 3px",
-                              fontWeight: "bold",
-                            }}
+                            
                           >
                             End Date{" "}
                             <span
@@ -490,11 +486,7 @@ const ProjectDetailsModal = ({
                         </Grid.Column>
                         <Grid.Column>
                           <p
-                            style={{
-                              margin: "0px",
-                              padding: "10px 4px 3px",
-                              fontWeight: "bold",
-                            }}
+                            
                           >
                             End Date{" "}
                             <span

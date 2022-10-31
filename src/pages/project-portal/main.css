@@ -22,15 +22,29 @@
 }
 
 .ui.small.modal>.header:not(.ui) {
-    background: linear-gradient(45deg,#ed9b03 20%, #e49d18 80%, #ed9b03 100%) !important;
-  
+    background: linear-gradient(45deg,#f3a411 20%, #f3a81e 80%, #faae20 100%) !important;
+    text-transform: uppercase;
+     
+   color: rgb(45, 45, 45);
+     /* color: #f2711c; */
+    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    letter-spacing: 1px;
 }
 
+ .ui.small.modal {
  
+  
+  z-index: 9999 !important;
+ }
 
 .ui.medium.modal>.header:not(.ui) {
-    background: linear-gradient(45deg,#ed9b03 20%, #e49d18 80%, #ed9b03 100%) !important;
-  
+      background: linear-gradient(45deg,#f3a411 20%, #f3a81e 80%, #faae20 100%) !important;
+    text-transform: uppercase;
+     
+    color: rgb(45, 45, 45);
+     
+    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    letter-spacing: 1px;
 }
 
 textarea {
@@ -80,9 +94,10 @@ textarea {
 
 input, textArea {
   border: 1px solid black !important;
-  background-color:rgb(238, 238, 238) !important;
+  background-color:rgb(240, 240, 240) !important;
   border-radius: 4px !important;
   color: rgb(1, 1, 1) !important;
+  
 }
 
    input::-webkit-calendar-picker-indicator {
