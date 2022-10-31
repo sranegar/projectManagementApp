@@ -51,9 +51,9 @@ const ProjectDetailsModal = ({
     setEditMode(false);
     setShowModal(false);
   };
-  console.log(values);
+ 
 
-  let chb = document.getElementById("checkboxInput");
+  // let chb = document.getElementById("checkboxInput");
   // console.log(Object.values({chb}).map((c) => {return c.checked}));
 
   const handleOnChange = (e) => {
@@ -64,7 +64,6 @@ const ProjectDetailsModal = ({
 
   const onClick = (e) => {
     const { name, checked } = e.target;
-    console.log(name, checked);
     setValues({ ...values, [name]: checked });
   };
 
@@ -118,7 +117,7 @@ const ProjectDetailsModal = ({
           <Modal.Header style={{ backgroundColor: "#f7ef1e" }}>
             {editMode ? "EDIT Project Details" : "Project Details"}
           </Modal.Header>
-          <pre>{JSON.stringify(values, undefined, 10)}</pre>
+          {/* <pre>{JSON.stringify(values, undefined, 10)}</pre> */}
           <Modal.Content className="modal-content">
             <Segment padded>
               <React.Fragment>

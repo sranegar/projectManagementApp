@@ -298,7 +298,6 @@ const Main = () => {
                           raised
                           fluid
                           color="green"
-                          style={{ padding: "10px" }}
                           onClick={() => {
                             openDetailsModal(epic.id);
                           }}
@@ -315,7 +314,11 @@ const Main = () => {
                               content={epic.description}
                             />
                           </Card.Content>
-                          <Card.Content extra>
+                          <Card.Content
+                            
+                            extra
+                            
+                          >
                             <Grid columns="2">
                               <Grid.Column># Tasks</Grid.Column>
                               <Grid.Column textAlign="right">
@@ -334,7 +337,7 @@ const Main = () => {
             <Segment textAlign="left" style={{ marginTop: "20px" }}>
               <Header
                 as="h4"
-                color="violet"
+                color="blue"
                 style={{ padding: "5 5 0", margin: "0px" }}
               >
                 Complete
@@ -351,8 +354,8 @@ const Main = () => {
                           className="project-card"
                           raised
                           fluid
-                          color="purple"
-                          style={{ padding: "10px" }}
+                          color="blue"
+                     
                           onClick={() => {
                             openDetailsModal(epic.id);
                           }}
