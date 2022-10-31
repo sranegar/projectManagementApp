@@ -137,9 +137,7 @@ const Main = () => {
           closeIcon
           size="small"
         >
-          <Modal.Header style={{ backgroundColor: "#f7ef1e" }}>
-            Add New Project
-          </Modal.Header>
+          <Modal.Header>Add New Project</Modal.Header>
           <Modal.Content className="modal-content">
             <Segment padded>
               <Grid doubling stackable centered className="form-wrapper">
@@ -265,10 +263,10 @@ const Main = () => {
         />
         {/* project portal body */}
         <Grid.Column>
-          <Segment padded="very" secondary style={{ paddingBottom: "60px" }}>
+          <Segment inverted style={{ paddingBottom: "60px" }}>
             <Grid columns="2">
               <Grid.Column>
-                <Header as="h2" style={{ paddingBottom: "10px" }}>
+                <Header inverted as="h2" style={{ paddingBottom: "10px" }}>
                   Project Portal
                 </Header>
               </Grid.Column>
@@ -280,22 +278,31 @@ const Main = () => {
               </Grid.Column>
             </Grid>
 
-            <Segment textAlign="left" style={{ marginTop: "20px" }}>
+            <Segment
+              basic
+              textAlign="left"
+              style={{
+                padding: "0px 5px",
+                marginTop: "20px",
+                
+              }}
+            >
               <Header
                 as="h4"
                 color="green"
-                style={{ padding: "5 5 0", margin: "0px" }}
+                style={{
+                  padding: "20px",
+                  margin: "0px",
+                  backgroundColor: "#020102",
+                }}
               >
                 In Progress
               </Header>
-              <Grid doubling stackable columns="3" padded>
+              <Grid doubling stackable columns="4" padded>
                 {epics.map((epic) => {
                   if (epic.status === false || epic.status === null) {
                     return (
-                      <Grid.Column
-                        style={{ padding: "20px 40px" }}
-                        key={epic.id}
-                      >
+                      <Grid.Column style={{ padding: "20px" }} key={epic.id}>
                         <Card
                           className="project-card"
                           raised
@@ -317,11 +324,7 @@ const Main = () => {
                               content={epic.description}
                             />
                           </Card.Content>
-                          <Card.Content
-                            
-                            extra
-                            
-                          >
+                          <Card.Content extra>
                             <Grid columns="2">
                               <Grid.Column># Tasks</Grid.Column>
                               <Grid.Column textAlign="right">
@@ -337,28 +340,36 @@ const Main = () => {
               </Grid>
             </Segment>
 
-            <Segment textAlign="left" style={{ marginTop: "20px" }}>
+            <Segment
+              basic
+              textAlign="left"
+              style={{
+                padding: "0px 5px",
+                marginTop: "20px",
+                
+              }}
+            >
               <Header
                 as="h4"
                 color="blue"
-                style={{ padding: "5 5 0", margin: "0px" }}
+                style={{
+                  padding: "20px",
+                  margin: "0px",
+                  backgroundColor: "#020102",
+                }}
               >
                 Complete
               </Header>
-              <Grid doubling stackable columns="3" padded>
+              <Grid doubling stackable columns="4" padded>
                 {epics.map((epic) => {
                   if (epic.status === true) {
                     return (
-                      <Grid.Column
-                        style={{ padding: "20px 40px" }}
-                        key={epic.id}
-                      >
+                      <Grid.Column style={{ padding: "20px" }} key={epic.id}>
                         <Card
                           className="project-card"
                           raised
                           fluid
                           color="blue"
-                     
                           onClick={() => {
                             openDetailsModal(epic.id);
                           }}
