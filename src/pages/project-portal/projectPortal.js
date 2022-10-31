@@ -177,7 +177,13 @@ const Main = () => {
                       <Grid.Column>
                         <p>
                           Start Date{" "}
-                          <span style={{ color: "red", fontStyle: "italic" }}>
+                          <span
+                            style={{
+                              color: "purple",
+                              fontStyle: "italic",
+                              fontWeight: "lighter",
+                            }}
+                          >
                             (optional)
                           </span>
                           :
@@ -198,7 +204,13 @@ const Main = () => {
                           }}
                         >
                           End Date{" "}
-                          <span style={{ color: "red", fontStyle: "italic" }}>
+                          <span
+                            style={{
+                              color: "purple",
+                              fontStyle: "italic",
+                              fontWeight: "lighter",
+                            }}
+                          >
                             (optional)
                           </span>
                           :
@@ -226,7 +238,7 @@ const Main = () => {
                       </Label>
                     ) : null}
 
-                    <Grid>
+                    <Grid padded>
                       <Grid.Column>
                         {" "}
                         <Button
@@ -284,16 +296,16 @@ const Main = () => {
               style={{
                 padding: "0px 5px",
                 marginTop: "20px",
-                
               }}
             >
               <Header
                 as="h4"
-                color="green"
                 style={{
                   padding: "20px",
                   margin: "0px",
-                  backgroundColor: "#020102",
+                  backgroundColor: "#e9e9e954 ",
+                  borderLeft: "3px solid #57c672",
+                  color: "#eee",
                 }}
               >
                 In Progress
@@ -346,16 +358,16 @@ const Main = () => {
               style={{
                 padding: "0px 5px",
                 marginTop: "20px",
-                
               }}
             >
               <Header
                 as="h4"
-                color="blue"
                 style={{
                   padding: "20px",
                   margin: "0px",
-                  backgroundColor: "#020102",
+                  backgroundColor: "#e9e9e954  ",
+                  borderLeft: "3px solid #2185d0",
+                  color: "#eee",
                 }}
               >
                 Complete

@@ -16,12 +16,12 @@
 }
 
 .modal-content {
-  background-color: rgb(238, 238, 238) !important;
+  background-color: #eeeeee !important;
 }
 
 .ui.small.modal>.header:not(.ui) {
-    background: linear-gradient(45deg, #362b6e 30%, #1e183b 90%) !important;
-    color: #fff !important;
+    background: linear-gradient(45deg,#ed9b03 20%, #eda115 80%, #ed9b03 100%) !important;
+  
 }
 
 .form-wrapper p {
@@ -33,14 +33,14 @@
 .project-card {
   min-width: 150px;
    transition: all 0.4s;
-    opacity: 80%;
+    opacity: 85%;
 }
 
 .project-card:hover {
   cursor: pointer;
   box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px !important;
     transition: all 0.4s;
-    opacity: 90%;
+    opacity: 95%;
 }
 
 .ui.card>.extra, .ui.cards>.card>.extra {
@@ -65,8 +65,11 @@
   cursor: pointer !important;
 }
 
-input {
+input, textArea {
   border: 1px solid black !important;
+  background-color:rgb(238, 238, 238) !important;
+  border-radius: 4px !important;
+  color: rgb(1, 1, 1) !important;
 }
 
    input::-webkit-calendar-picker-indicator {

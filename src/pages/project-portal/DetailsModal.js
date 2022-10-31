@@ -147,7 +147,19 @@ const ProjectDetailsModal = ({
                         />
                         <Grid doubling stackable columns="2">
                           <Grid.Column>
-                            <p>Start Date (optional):</p>{" "}
+                            <p>
+                              Start Date{" "}
+                              <span
+                                style={{
+                                  color: "purple",
+                                  fontStyle: "italic",
+                                  fontWeight: "lighter",
+                                }}
+                              >
+                                (optional)
+                              </span>
+                              :
+                            </p>{" "}
                             <Input
                               name="startDate"
                               type="date"
@@ -163,7 +175,17 @@ const ProjectDetailsModal = ({
                                 fontWeight: "bold",
                               }}
                             >
-                              End Date (optional):
+                              End Date{" "}
+                              <span
+                                style={{
+                                  color: "purple",
+                                  fontStyle: "italic",
+                                  fontWeight: "lighter",
+                                }}
+                              >
+                                (optional)
+                              </span>
+                              :
                             </p>{" "}
                             <Input
                               name="endDate"
@@ -316,7 +338,11 @@ const ProjectDetailsModal = ({
                             <p>
                               Start Date{" "}
                               <span
-                                style={{ color: "red", fontStyle: "italic" }}
+                                style={{
+                                  color: "purple",
+                                  fontStyle: "italic",
+                                  fontWeight: "lighter",
+                                }}
                               >
                                 (optional)
                               </span>
@@ -339,7 +365,11 @@ const ProjectDetailsModal = ({
                             >
                               End Date{" "}
                               <span
-                                style={{ color: "red", fontStyle: "italic" }}
+                                style={{
+                                  color: "purple",
+                                  fontStyle: "italic",
+                                  fontWeight: "lighter",
+                                }}
                               >
                                 (optional)
                               </span>
