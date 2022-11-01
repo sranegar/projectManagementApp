@@ -22,6 +22,8 @@ import {
 } from "firebase/firestore";
 import { db } from "../../config/firebase-config";
 import ProjectDetailsModal from "./DetailsModal";
+import Dashboard from "../dashboard/dashboard";
+import useFirebase from "../../services/useFirebase";
 
 const Main = () => {
   //Add epic form variables
@@ -58,7 +60,8 @@ const Main = () => {
   const [epics, setEpics] = useState([]);
   const epicsCollectionRef = collection(db, "epics");
   const [viewTasks, setViewTasks] = useState([]);
-
+ 
+  
   //Create epic
   const createEpic = async () => {
     await addDoc(epicsCollectionRef, formValues);
@@ -276,6 +279,7 @@ const Main = () => {
           initValues={formValues}
           viewTasks={viewTasks}
         />
+        
         {/* project portal body */}
         <Grid.Column>
           <Segment

@@ -132,7 +132,7 @@ const ProjectDetailsModal = ({
     }
   }, [formErrors]);
 
-  console.log(values);
+
   return (
     <Grid>
       <Grid.Column>

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Button,
   Card,
@@ -9,21 +9,63 @@ import {
   Modal,
   Input,
   TextArea,
+  List,
+  CardHeader,
 } from "semantic-ui-react";
+import useFirebase from "../../services/useFirebase";
 
 const Dashboard = () => {
-  const [open, setOpen] = useState(false);
+  const initVal = [
+    {
+      title: "",
+      details: "",
+    },
+  ];
 
+  const [makeTasks, setMakeTasks] = useState();
+  const [taskDetails, setTaskDetails] = useState([]);
+  const [tasksArray, setTasksArray] = useState([]);
+  const [setNew, setNewArray] = useState([]);
+  const [open, setOpen] = useState(false);
+  const { epics } = useFirebase();
+  const [allTasks, setAllTasks] = useState([]);
   //Open add epic form modal
   const openModal = () => {
     setOpen(!open);
+
+    getData();
+
+    setArray();
+
+    nextSet();
   };
 
-  const myObj = [{
-    id: 1,
-    epic: "Name one"
-  },
-  {id: 2, epic: "Name two"}]
+  console.log(setNew);
+
+  const getData = () => {
+    makeTasks.map((t) => setTaskDetails(...makeTasks));
+    // setAllTasks([...setNew[1], ...setNew[2], ...setNew[3], ...setNew[4]]);
+  };
+
+  const setArray = () => {
+    taskDetails.map((v) => setTasksArray(Object.values(v)));
+  };
+
+  const nextSet = () => {
+    tasksArray.map((t) => setNewArray([...tasksArray, ...Object.values(t)]));
+  };
+
+  useEffect(() => {
+    const getTasks = () => {
+      setMakeTasks(
+        epics.map((e) => ({
+          ...e.tasks,
+        }))
+      );
+    };
+
+    getTasks();
+  }, [epics]);
 
   return (
     <Grid padded doubling stackable className="main-wrapper">
@@ -98,15 +140,15 @@ const Dashboard = () => {
                     color: "#eee",
                   }}
                 >
-                  Dashboard
+                  Dashboard 
                 </Header>
               </Grid.Column>
-              {/* <Grid.Column textAlign="right">
+              <Grid.Column textAlign="right">
                 <Button color="orange" onClick={openModal}>
                   <Icon name="add" />
                   Add Project
                 </Button>
-              </Grid.Column> */}
+              </Grid.Column>
             </Grid>
 
             <Segment
@@ -129,10 +171,19 @@ const Dashboard = () => {
                   fontVariantCaps: "all-petite-caps",
                 }}
               >
-                In Progress
+                To Do
               </Header>
               <Grid doubling stackable columns="4" padded>
-                <Grid.Column style={{ padding: "60px 20px" }}></Grid.Column>
+                <Grid.Column style={{ padding: "60px 20px" }}>
+                  {/* {allTasks.map((t) => {
+                    {
+                      console.log(t);
+                    }
+                    <Card>
+                      <CardHeader>{t.details}</CardHeader>
+                    </Card>;
+                  })} */}
+                </Grid.Column>
               </Grid>
             </Segment>
 
