@@ -184,9 +184,9 @@ const ProjectDetailsModal = ({
                           />
                         </Grid.Column>
                       </Grid>
-                      <Grid doubling stackable columns="2" >
-                        <Grid.Column >
-                          <p >
+                      <Grid doubling stackable columns="2">
+                        <Grid.Column>
+                          <p>
                             Start Date{" "}
                             <span
                               style={{
@@ -208,9 +208,7 @@ const ProjectDetailsModal = ({
                           />
                         </Grid.Column>
                         <Grid.Column>
-                          <p
-                            
-                          >
+                          <p>
                             End Date{" "}
                             <span
                               style={{
@@ -278,8 +276,8 @@ const ProjectDetailsModal = ({
                               {viewTasks ? (
                                 <Accordion.Content active={activeIndex === -1}>
                                   <List divided>
-                                    {viewTasks.map((t) => (
-                                      <List.Item disabled>
+                                    {viewTasks.map((t, idx) => (
+                                      <List.Item disabled key={idx}>
                                         <Grid
                                           columns="2"
                                           style={{ padding: "0px 10px" }}
@@ -485,9 +483,7 @@ const ProjectDetailsModal = ({
                           />
                         </Grid.Column>
                         <Grid.Column>
-                          <p
-                            
-                          >
+                          <p>
                             End Date{" "}
                             <span
                               style={{
@@ -556,23 +552,18 @@ const ProjectDetailsModal = ({
                               {viewTasks ? (
                                 <Accordion.Content active={activeIndex === -1}>
                                   <List divided>
-                                    {viewTasks.map((t) => (
-                                      <List.Item>
+                                    {viewTasks.map((t, idx) => (
+                                      <List.Item key={idx}>
                                         <Grid
                                           columns="2"
                                           style={{ padding: "0px 10px" }}
                                         >
                                           <Grid.Column width="1">
-                                            <Checkbox
-                                             
-                                              checked={t.status}
-                                            />
+                                            <Checkbox checked={t.status} />
                                           </Grid.Column>
                                           <Grid.Column width="14">
                                             <List.Header
-                                              
                                               style={{
-                                              
                                                 textTransform: "uppercase",
                                                 color: "#2185d0",
                                                 fontVariantCaps:

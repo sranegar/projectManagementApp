@@ -5,11 +5,8 @@ const TopNav = () => {
   return (
     <Grid className="head" padded stackable verticalAlign="middle" divided>
       <Grid.Column>
-        {" "}
         <Image src="logo.png" size="medium" />
       </Grid.Column>
-
-      {/* <Icon textAlign='right' className="avatar" name="user circle" size="big" /> */}
     </Grid>
   );
 };
